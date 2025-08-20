@@ -1,0 +1,23 @@
+{
+  "name": "modspacegirls",
+  "version": "1.0.0",
+  "main": "spacegirlsMOD.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RUSH-MEIO/MODSPACEGIRLS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RUSH-MEIO/MODSPACEGIRLS/issues"
+  },
+  "homepage": "https://github.com/RUSH-MEIO/MODSPACEGIRLS#readme",
+  "description": "",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
