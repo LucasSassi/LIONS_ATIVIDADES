@@ -29,20 +29,6 @@ export function salvarDados(dados) {
   fs.writeFileSync(dbPath, dadosJson);
 }
 
-// --- Rotas da API ---
-
-app.get("/estudantes", (req, res) => {
-  const instrucoes = `
-        API de Livros:
-        - GET /estudantes/listar: Para listar os estudantes existentes.
-        - POST /estudantes: Para adicionar um novo estudante (enviar dados em JSON).
-        - DELETE /estudantes/:id: Para deletar um estudante pela matricula.
-        - PUT /estudantes/:id: Para atualizar um estudante pela matricula.
-    `;
-  res.type("text/plain").send(instrucoes);
-});
-
-
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
