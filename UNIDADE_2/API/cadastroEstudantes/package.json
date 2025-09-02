@@ -6,11 +6,11 @@
   "name": "cadastroestudantes",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "start:dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {},
   "description": ""
 }

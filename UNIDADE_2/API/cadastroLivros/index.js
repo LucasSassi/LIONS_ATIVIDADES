@@ -8,7 +8,7 @@ app.use(express.json());
 // Caminho para o arquivo no "banco de dados"
 const dbPath = './livros.json';
 
-// --- Funções Auxiliares para ler e salvar no arquivo ---
+// --- Funções Auxiliares para ler e salvar no arquivo ----
 
 function lerDados() {
     if (!fs.existsSync(dbPath)) {
