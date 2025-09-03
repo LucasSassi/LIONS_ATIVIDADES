@@ -1,12 +1,12 @@
 import { lerDadosPacientes, salvarDadosPacientes } from "../index.js";
 
-export function adicionarPaciente (req, res) {
+export function adicionarPaciente(req, res) {
   const { nome, DataDeNascimento } = req.body;
 
   if (!nome || !DataDeNascimento) {
-    return res.status(400).json({
-      message: "Todos os campos (nome, data de nascimento) são obrigatórios.",
-    });
+    return res
+      .status(400)
+      .send("Todos os campos (nome e data de nascimento) são obrigatórios.");
   }
 
   const novoPaciente = {
@@ -22,4 +22,4 @@ export function adicionarPaciente (req, res) {
   salvarDadosPacientes(pacientes);
 
   res.status(201).send(`Paciente "${novoPaciente.nome}" adicionado`);
-};
+}

@@ -8,10 +8,12 @@ const port = 8080;
 app.use(express.json());
 app.use(router);
 
+// FUNCOES DE LEITURA E ESCRITA DE DADOS //
+
 // Caminhos para os arquivos no "banco de dados"
-export const jsonMedicos = "./medicos.json";
-export const jsonPacientes = "./pacientes.json";
-export const jsonConsultas = "./consultas.json";
+export const jsonMedicos = "./json/medicos.json";
+export const jsonPacientes = "./json/pacientes.json";
+export const jsonConsultas = "./json/consultas.json";
 
 // --- FUNÇÕES DE LEITURA ---
 
@@ -38,7 +40,6 @@ export function lerDadosConsultas() {
   return lerDados(jsonConsultas);
 }
 
-
 // --- FUNÇÕES DE ESCRITA ---
 
 // Função genérica (base) para salvar dados
@@ -59,7 +60,7 @@ export function salvarDadosPacientes(dados) {
 export function salvarDadosConsultas(dados) {
   salvarDados(jsonConsultas, dados);
 }
-
+////////////////////////////////////////////////
 
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
