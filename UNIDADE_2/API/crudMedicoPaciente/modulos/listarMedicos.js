@@ -10,7 +10,7 @@ export function listarMedicos(req, res) {
   }
 
 const medicosFiltrados = medicos.filter(medico => {
-    const correspondeCRM = !CRM || medico.CRM.toLowerCase().includes(CRM.toLowerCase());
+    const correspondeCRM = !CRM || (medico.CRM === parseInt(CRM) ? medico.CRM : false)   
 
     const correspondeNome = !nome || medico.nome.toLowerCase().includes(nome.toLowerCase());
 
@@ -19,6 +19,6 @@ const medicosFiltrados = medicos.filter(medico => {
     return correspondeNome && correspondeCRM && correspondeEspecialidade;
   });
 
-  // 5. Retorna a lista filtrada
+  // Retorna a lista filtrada 
   res.status(200).json(medicosFiltrados);
-}
+} 

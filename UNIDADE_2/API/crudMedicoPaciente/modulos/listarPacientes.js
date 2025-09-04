@@ -9,16 +9,15 @@ export function listarPacientes(req, res) {
     return res.status(200).json(pacientes);
   }
 
-  const pacientesFiltrados = pacientes.filter(medico => {
-    const correspondeID = !ID || medico.ID.toLowerCase().includes(ID.toLowerCase());
+  const pacientesFiltrados = pacientes.filter(paciente => {
+    const correspondeID = !ID || paciente.ID.toLowerCase().includes(ID.toLowerCase());
 
-    const correspondeNome = !nome || medico.nome.toLowerCase().includes(nome.toLowerCase());
+    const correspondeNome = !nome || paciente.nome.toLowerCase().includes(nome.toLowerCase());
 
-    const correspodeDataDeNascimento = !DataDeNascimento || medico.DataDeNascimento.toLowerCase().includes(DataDeNascimento.toLowerCase());
+    const correspodeDataDeNascimento = !DataDeNascimento || paciente.DataDeNascimento.toLowerCase().includes(DataDeNascimento.toLowerCase());
 
     return correspondeNome && correspondeID && correspodeDataDeNascimento;
   });
 
-  // 5. Retorna a lista filtrada
   res.status(200).json(pacientesFiltrados);
 }

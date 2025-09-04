@@ -64,4 +64,7 @@ export function salvarDadosConsultas(dados) {
 
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
+  // setTimeout(() => {
+
+  // }, 5000)
 });

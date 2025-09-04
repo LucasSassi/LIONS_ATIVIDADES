@@ -1,7 +1,7 @@
 import { lerDadosConsultas } from "../index.js";
 
 export function listarConsultas(req, res) {
-  const consultas = lerDadosConsultas();
+  let consultas = lerDadosConsultas();
   
   const { IDconsulta, data, CRM, ID, descricao } = req.query;
 
@@ -9,16 +9,16 @@ export function listarConsultas(req, res) {
     return res.status(200).json(consultas);
   }
 
-const consultasFiltradas = consultas.filter(medico => {
-    const correspondeCRM = !CRM || medico.CRM.toLowerCase().includes(CRM.toLowerCase());
+const consultasFiltradas = consultas.filter((elemento)  => {
+    const correspondeCRM = !CRM || (elemento.CRM === parseInt(CRM) ? elemento.CRM : false) 
 
-    const correspondeData = !data || medico.data.toLowerCase().includes(data.toLowerCase());
+    const correspondeData = !data || elemento.data.toLowerCase().includes(data.toLowerCase());
 
-    const correspondeIDconsulta = !IDconsulta || medico.IDconsulta.toLowerCase().includes(IDconsulta.toLowerCase());
+    const correspondeIDconsulta = !IDconsulta || elemento.IDconsulta.toLowerCase().includes(IDconsulta.toLowerCase());
 
-    const correspondeID = !ID || medico.ID.toLowerCase().includes(ID.toLowerCase());
+    const correspondeID = !ID || (elemento.ID === parseInt(ID) ? elemento.ID : false) 
 
-    const correspondeDescricao = !descricao || medico.descricao.toLowerCase().includes(descricao.toLowerCase());
+    const correspondeDescricao = !descricao || elemento.descricao.toLowerCase().includes(descricao.toLowerCase());
 
     return correspondeData && correspondeCRM && correspondeIDconsulta && correspondeID && correspondeDescricao;
   });
