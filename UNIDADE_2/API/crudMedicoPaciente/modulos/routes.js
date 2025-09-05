@@ -16,12 +16,12 @@ import { medicosQueAtenderamPaciente } from "./filtrarPorPaciente.js";
 import { ConsultasPorMes } from "./consultasEmUmMesEspecfico.js";
 
 export const router = express.Router();
-router.get("/clinica", DadosDaAPI)
-router.get("/clinica/relatorio/mes/:mes/:ano", ConsultasPorMes)
-router.get("/clinica/relatorio/paciente/:ID", medicosQueAtenderamPaciente);
-router.get("/clinica/relatorios/medicos/:CRM", listarConsultasDeUmMedico)
-router.put("/clinica/atualizar/pacientes/:ID", atualizarPaciente)
-router.put("/clinica/atualizar/medicos/:CRM", atualizarMedico)
+router.get("/clinica", DadosDaAPI);
+router.get("/clinica/relatorios/mes/:mes/:ano", ConsultasPorMes);
+router.get("/clinica/relatorios/pacientes/:ID", medicosQueAtenderamPaciente);
+router.get("/clinica/relatorios/medicos/:CRM", listarConsultasDeUmMedico);
+router.put("/clinica/atualizar/pacientes/:ID", atualizarPaciente);
+router.put("/clinica/atualizar/medicos/:CRM", atualizarMedico);
 router.delete("/clinica/deletar/consultas/:IDconsulta", deletarConsulta);
 router.delete("/clinica/deletar/pacientes/:ID", deletarPaciente);
 router.delete("/clinica/deletar/medicos/:CRM", deletarMedico);

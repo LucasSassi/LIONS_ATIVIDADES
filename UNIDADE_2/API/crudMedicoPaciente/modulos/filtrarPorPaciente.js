@@ -11,8 +11,14 @@ export function medicosQueAtenderamPaciente(req, res) {
 
   if (consultasDoPaciente.length > 0) {
     const crmsDosMedicos = consultasDoPaciente.map((consulta) => consulta.CRM);
- 
-    res.status(200).json(crmsDosMedicos);
+    const crmsUnicos = [...new Set(crmsDosMedicos)];
+
+    const resposta = {
+      descricao: `CRM dos médicos que atenderam o paciente com ID ${ID}`,
+      crms: crmsUnicos,
+    };
+
+    res.status(200).json(resposta);
   } else {
     res.status(404).send("Nenhuma consulta encontrada para o ID informado.");
   }
