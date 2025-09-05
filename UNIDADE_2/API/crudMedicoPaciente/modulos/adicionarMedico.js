@@ -4,9 +4,7 @@ export function adicionarMedico (req, res) {
   const { nome, especialidade } = req.body;
 
   if (!nome || !especialidade) {
-    return res.status(400).json({
-      message: "Todos os campos (nome, especialidade) são obrigatórios.",
-    });
+    return res.status(400).send("Todos os campos (nome, especialidade) são obrigatórios.");
   }
 
   const novoMedico = {
