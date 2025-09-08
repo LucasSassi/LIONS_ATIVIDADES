@@ -15,7 +15,7 @@ export function medicosQueAtenderamPaciente(req, res) {
 
     const resposta = {
       descricao: `CRM dos médicos que atenderam o paciente com ID ${ID}`,
-      crms: crmsUnicos,
+      CRMS: crmsUnicos,
     };
 
     res.status(200).json(resposta);

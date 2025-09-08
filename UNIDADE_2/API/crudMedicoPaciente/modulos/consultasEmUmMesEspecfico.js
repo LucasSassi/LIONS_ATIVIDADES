@@ -1,6 +1,5 @@
 import { lerDadosConsultas } from "../index.js";
 
-// Função ajustada para usar req.params
 export function ConsultasPorMes(req, res) {
   const { ano, mes } = req.params;
 

@@ -1,12 +1,14 @@
 import { lerDadosConsultas, salvarDadosConsultas } from "../index.js";
 
-export function adicionarConsulta (req, res) {
+export function adicionarConsulta(req, res) {
   const { data, CRM, ID, descricao } = req.body;
 
   if (!data || !CRM || !ID || !descricao) {
-    return res.status(400).json({
-      message: "Todos os campos (data, CRM do médico, ID do paciente e descrição) são obrigatórios.",
-    });
+    return res
+      .status(400)
+      .send(
+        "Todos os campos (data, CRM do médico, ID do paciente e descrição) são obrigatórios."
+      );
   }
 
   const novaConsulta = {
@@ -24,4 +26,4 @@ export function adicionarConsulta (req, res) {
   salvarDadosConsultas(consultas);
 
   res.status(201).send(`Consulta "${novaConsulta.descricao}" adicionada`);
-};
+}

@@ -22,7 +22,7 @@ export function atualizarMedico(req, res) {
     }
 
     const medicoAtualizado = {
-      CRM: CRM, // Mantemos a matrícula original da URL
+      CRM: CRM,
       nome: nome,
       especialidade, especialidade
     };
