@@ -5,5 +5,12 @@
     "idEstudante": "1757512109099",
     "dataAluguel": "2025-09-10T14:53:34.945Z",
     "dataDevolucao": "2025-09-10T14:54:08.157Z"
+  },
+  {
+    "idAluguel": 1757521760675,
+    "idLivro": "1757508008361",
+    "idEstudante": "1757521661901",
+    "dataAluguel": "2025-09-10T16:29:20.675Z",
+    "dataDevolucao": "2025-09-10T16:33:50.306Z"
   }
 ]

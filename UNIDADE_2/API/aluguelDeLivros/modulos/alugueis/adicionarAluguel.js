@@ -16,7 +16,9 @@ export function adicionarAluguel(req, res) {
   );
 
   if (livroJaAlugado) {
-    return res.status(400).send("Este livro já está alugado e não foi devolvido.");
+    return res.status(400).json({
+      message: "Este livro já está alugado e não foi devolvido.",
+    });
   }
 
   const novoAluguel = {
@@ -24,7 +26,7 @@ export function adicionarAluguel(req, res) {
     idLivro,
     idEstudante,
     dataAluguel: new Date().toISOString(),
-    dataDevolucao: false,
+    dataDevolucao: null,
   };
 
   alugueis.push(novoAluguel);
