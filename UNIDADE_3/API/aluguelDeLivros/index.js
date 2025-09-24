@@ -1,9 +1,26 @@
 import express from "express";
 import fs from "fs";
 import { router } from "./routes.js";
+import mongoose from "mongoose";
 
 const app = express();
 const port = 8080;
+
+
+mongoose.connect(
+  `mongodb+srv://LucasSassideSouza:12345@cluster0.kt8yoxu.mongodb.net`
+);
+
+mongoose.connection.once("open", () => {
+  console.log("Conectado ao MongoDB");
+});
+
+mongoose.connection?.on("error", (err) => {
+  console.error(`Erro ao conectar ao servidor, ${err}`);
+});
+
+app.use(express.json())
+
 
 app.use(express.json());
 app.use(router);

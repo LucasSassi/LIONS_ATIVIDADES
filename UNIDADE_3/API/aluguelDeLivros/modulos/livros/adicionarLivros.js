@@ -1,6 +1,6 @@
-import { lerDadosLivros, salvarDadosLivros } from "../../index.js";
+import MLivro from "../../schemaLivro.js";
 
-export function adicionarLivros (req, res) {
+export async function adicionarLivros (req, res) {
   const { titulo, autor, ano, genero } = req.body;
 
   if (!titulo || !autor || !ano || !genero) {
@@ -9,19 +9,14 @@ export function adicionarLivros (req, res) {
     });
   }
 
-  const novoLivro = {
-    id: Date.now(),
+  const novoLivro = new MLivro ({
     titulo,
     autor,
     ano,
     genero,
-  };
+  });
 
-  const livros = lerDadosLivros();
+  const salvarLivros = await novoLivro.save();
 
-  livros.push(novoLivro);
-
-  salvarDadosLivros(livros);
-
-  res.status(201).send(`Livro "${novoLivro.titulo}" adicionado`);
+  res.status(201).send(`Livro "${novoLivro.titulo}" adicionado`, salvarLivros);
 };

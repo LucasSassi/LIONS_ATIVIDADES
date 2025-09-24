@@ -1,40 +1,27 @@
-import { salvarDadosLivros, lerDadosLivros } from "../../index.js";
+import MLivro from '../../schemaLivro.js';
 
-export function atualizarLivro(req, res) {
+export async function atualizarLivro(req, res) {
   try {
-    const id = Number(req.params.id);
-    const { titulo, genero, ano, autor } = req.body;
+    const { id } = req.params;
 
-    if (!titulo || !genero || !ano || !autor) {
-      return res
-        .status(400)
-        .send("Todos os campos sao obrigatorios (titulo, genero, ano e autor)");
+    const novosDados = req.body;
+
+    const livroAtualizado = await MLivro.findByIdAndUpdate(
+      id,          // O ID do documento a ser atualizado
+      novosDados,  // Os novos dados para o documento
+      {
+        new: true, // Opção: Retorna o documento *depois* de atualizado (essencial!)
+        runValidators: true, // Opção: Garante que as validações do Schema sejam aplicadas na atualização
+      }
+    );
+
+    if (!livroAtualizado) {
+      return res.status(404).json({ message: "Estudante não encontrado." });
     }
+    res.status(200).json({message: "Livro atualizado"});
 
-    const livros = lerDadosLivros();
-    const livroIndex = livros.findIndex((livro) => livro.id === id);
-
-    if (livroIndex === -1) {
-      return res
-        .status(400)
-        .send("Nao foi possivel encontrar um livro com esse id");
-    }
-
-    const livroAtualizado = {
-      id: id,
-      titulo,
-      autor,
-      ano,
-      genero,
-    };
-
-    livros[livroIndex] = livroAtualizado;
-    salvarDadosLivros(livros);
-
-    return res
-      .status(200)
-      .send(`Livro ${livroAtualizado.titulo}, atualizado com sucesso`);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error("Erro ao atualizar livro:", error);
+    res.status(500).json({ message: `Ocorreu um erro no servidor: ${error.message}` });
   }
 }
