@@ -1,38 +1,29 @@
-import { salvarDadosAlugueis, lerDadosAlugueis } from "../../index.js";
+import MAluguel from '../../schemaAluguel.js';
 
-export function editarAluguel(req, res) {
+export async function editarAluguel(req, res) {
   try {
-    const idAluguel = Number(req.params.idAluguel);
-    const { idEstudante, idLivro } = req.body;
+    const  id  = req.params.idAluguel;
 
-    const alugueis = lerDadosAlugueis();
-    const aluguelIndex = alugueis.findIndex((aluguel) => aluguel.idAluguel === idAluguel);
+    const novosDados = req.body;
 
-    if (aluguelIndex == -1) {
-      return res
-        .status(404)
-        .send("Não foi possível encontrar um aluguel com esse id");
+    const aluguelAtualizado = await MAluguel.findByIdAndUpdate(
+      id,          // O ID do documento a ser atualizado
+      novosDados,  // Os novos dados para o documento
+      {
+        new: true, // Opção: Retorna o documento *depois* de atualizado (essencial!)
+        runValidators: true, // Opção: Garante que as validações do Schema sejam aplicadas na atualização
+      }
+    );
+
+
+
+    if (!aluguelAtualizado) {
+      return res.status(404).json({ message: "aluguel não encontrado." });
     }
+    res.status(200).json({message: "aluguel atualizado"});
 
-    const dataDevolucao1 = alugueis[aluguelIndex].dataDevolucao;
-    const dataAluguel1 = alugueis[aluguelIndex].dataAluguel;
-
-    const aluguelAtualizado = {
-      idAluguel: idAluguel,
-      idLivro,
-      idEstudante,
-      dataAluguel: dataAluguel1,
-      dataDevolucao: dataDevolucao1,
-    };
-
-    alugueis[aluguelIndex] = aluguelAtualizado;
-    salvarDadosAlugueis(alugueis);
-
-    // Lembre-se que esta mensagem ainda é logicamente incorreta, como discutido antes
-    return res
-      .status(200)
-      .send(`Aluguel com ID ${idAluguel} foi atualizado com sucesso.`);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error("Erro ao atualizar aluguel:", error);
+    res.status(500).json({ message: `Ocorreu um erro no servidor: ${error.message}` });
   }
 }

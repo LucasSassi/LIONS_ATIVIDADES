@@ -20,9 +20,9 @@ export const router = express.Router();
 // alugueis
 router.delete("/aluguel/:idAluguel", deletarAlugueis)
 router.post("/aluguel", adicionarAluguel)
-router.put("/aluguel/devolucao/:idAluguel", devolucaoLivro)
+router.patch("/aluguel/devolucao/:idAluguel", devolucaoLivro)
 router.get("/aluguel", listarAlugueis)
-router.put("/aluguel/:idAluguel", editarAluguel)
+router.patch("/aluguel/:idAluguel", editarAluguel)
 // estudantes
 router.get("/estudantes", listarEstudantes)
 router.delete("/estudantes/:id", deletarEstudantes)

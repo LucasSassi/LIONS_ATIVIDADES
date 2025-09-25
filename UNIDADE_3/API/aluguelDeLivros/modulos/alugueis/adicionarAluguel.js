@@ -1,38 +1,37 @@
-import { lerDadosAlugueis, salvarDadosAlugueis } from "../../index.js";
+import MAluguel from "../../schemaAluguel.js";
 
-export function adicionarAluguel(req, res) {
+export async function adicionarAluguel(req, res) {
   const { idLivro, idEstudante } = req.body;
 
-  if (!idLivro || !idEstudante) {
-    return res.status(400).json({
-      message: "Todos os campos (idLivro e idEstudante) são obrigatórios.",
+  try {
+    
+    const livroJaAlugado = await MAluguel.findOne({
+      idLivro: idLivro,
+      dataDevolucao: null
     });
-  }
 
-  const alugueis = lerDadosAlugueis();
+    if (livroJaAlugado) {
+      return res.status(400).json({
+        message: "Este livro já está alugado e não foi devolvido.",
+      });
+    }
 
-  const livroJaAlugado = alugueis.some(
-    (aluguel) => aluguel.idLivro === idLivro && aluguel.dataDevolucao === null
-  );
-
-  if (livroJaAlugado) {
-    return res.status(400).json({
-      message: "Este livro já está alugado e não foi devolvido.",
+    const novoAluguel = new MAluguel({
+      idLivro,
+      idEstudante,
+      dataAluguel: new Date(),
+      dataDevolucao: null,
     });
+
+    const aluguelSalvo = await novoAluguel.save();
+
+    res.status(201).json({
+      message: "Aluguel registrado com sucesso!",
+      aluguel: aluguelSalvo
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Ocorreu um erro no servidor." });
   }
-
-  const novoAluguel = {
-    idAluguel: Date.now(),
-    idLivro,
-    idEstudante,
-    dataAluguel: new Date().toISOString(),
-    dataDevolucao: null,
-  };
-
-  alugueis.push(novoAluguel);
-
-  salvarDadosAlugueis(alugueis);
-  res.status(201).json({
-    message: "Aluguel registrado com sucesso!",
-  });
 }

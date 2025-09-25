@@ -1,22 +1,14 @@
-import { lerDadosAlugueis, salvarDadosAlugueis } from "../../index.js";
+import MAluguel from "../../schemaAluguel.js";
 
-export function deletarAlugueis (req, res){
-  const idAluguelParaDeletar = Number(req.params.idAluguel);
-  const alugueis = lerDadosAlugueis();
+export async function deletarAlugueis(req, res) {
+  try {
+    const idParaDeletar = req.params.idAluguel;
 
-  const alugueisIndex = alugueis.findIndex(
-    (aluguel) => aluguel.idAluguel === idAluguelParaDeletar
-  );
+    const deletarAluguel = await MAluguel.findByIdAndDelete(idParaDeletar);
 
-  if (alugueisIndex === -1) {
-    return res.status(404).json({
-      message: "Aluguel não encontrado com o id fornecido.",
-    });
+    res.status(200).send("Aluguel deletado com sucesso!", deletarAluguel);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erro interno no servidor." });
   }
-
-  alugueis.splice(alugueisIndex, 1);
-
-  salvarDadosAlugueis(alugueis);
-
-  res.status(200).send("Aluguel deletado com sucesso!");
-};
+}
