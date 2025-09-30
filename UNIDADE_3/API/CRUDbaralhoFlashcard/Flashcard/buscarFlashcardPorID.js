@@ -1,46 +1,17 @@
-import { flashcards, prompt, exibirMenu } from "../menu.js";
+import MFlashcard from "../Schemas/schemaFlashcards.js";
 
-export function BuscarFlashcardsPorID() {
-  console.clear();
+export async function BuscarFlashcardsPorID(req, res) {
+  try {
+    const id = req.params.id;
+    const flashcard = await MFlashcard.findById(id);
 
-  if (flashcards.length === 0) {
-    console.log("Nenhum flashcard criado ainda. Crie um primeiro.");
-    prompt("Pressione Enter para voltar ao menu...");
-    exibirMenu();
-    return;
+    if (!flashcard) {
+      return res.status(404).json({ message: "Flashcard não encontrado" });
+    }
+
+    res.status(200).json(flashcard);
+
+  } catch (error) {
+    res.status(500).json({ message: "Ocorreu um erro no servidor" });
   }
-
-  console.log("Flashcards existentes:");
-  flashcards.forEach((flashcard) => {
-    console.log(
-      `- ${flashcard.tituloBaralho}\nID: ${flashcard.idFlashcard}\nPERGUNTA: ${flashcard.pergunta}\nRESPOSTA: ${flashcard.resposta}\n\n`
-    );
-  });
-
-  console.log("Qual ID que deseja procurar?: ");
-  let idSelecionado = prompt("> ");
-  idSelecionado = parseInt(idSelecionado)
-
-
-  const idEncontrado = flashcards.find(
-    (flashcard) =>
-      flashcard.idFlashcard === idSelecionado
-  );
-
-  if (!idEncontrado) {
-    console.clear();
-    console.log("ID NÃO encontrado!!");
-    prompt("Pressione Enter para voltar ao menu...");
-    exibirMenu();
-    return;
-  }
-
-  console.clear();
-console.log("Flashcard encontrado com sucesso!\n");
-console.log(
-  `Baralho: ${idEncontrado.tituloBaralho}\nID: ${idEncontrado.idFlashcard}\n\nPERGUNTA: ${idEncontrado.pergunta}\nRESPOSTA: ${idEncontrado.resposta}\n`
-);
-
-prompt("Pressione Enter para voltar ao menu...");
-exibirMenu();
 }

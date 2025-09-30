@@ -1,93 +1,27 @@
-import { flashcards, baralhos, prompt, exibirMenu } from "../menu.js";
+import MFlashcard from "../Schemas/schemaFlashcards.js";
 
-export function atualzarFlashcard() {
-  console.clear();
-  if (baralhos.length === 0) {
-    console.log("Nenhum baralho criado ainda. Crie um baralho primeiro.");
-    prompt("Pressione Enter para voltar ao menu...");
-    exibirMenu();
-    return;
-  }
+export async function atualizarFlashcards(req, res) {
+  try {
+    const { id } = req.params;
+    const novosDados = req.body;
 
-  console.log("Baralhos existentes:");
-  baralhos.forEach((baralho) => {
-    console.log(`- ${baralho.titulo}`);
-  });
-  console.log("\nQual baralho você deseja listar os flashcard?");
-
-  const nomeBaralhoSelecionado = prompt("> ").trim();
-
-  const baralhoEncontrado = baralhos.find(
-    (baralho) =>
-      baralho.titulo.toLowerCase() === nomeBaralhoSelecionado.toLowerCase()
-  );
-
-  if (!baralhoEncontrado) {
-    console.clear();
-    console.log("\n====== Baralho não encontrado! ======");
-    prompt("Pressione Enter para voltar ao menu...");
-    exibirMenu();
-    return;
-  }
-
-  const flashcardsDoBaralho = flashcards.filter(
-    (flashcard) => flashcard.idBaralho === baralhoEncontrado.id
-  );
-
-  console.clear();
-
-  if (flashcardsDoBaralho.length === 0) {
-    console.log(
-      `\nO baralho "${baralhoEncontrado.titulo}" não possui flashcards.`
+    const flashcardAtualizado = await MFlashcard.findByIdAndUpdate(
+      id,
+      novosDados,
+      {
+        new: true,
+        runValidators: true,
+      }
     );
-  } else {
-    console.clear();
-    console.log("Selecione o ID do flashcard que deseja editar");
-    console.log(`\n--- Flashcards do Baralho: ${baralhoEncontrado.titulo} ---`);
-    flashcardsDoBaralho.forEach((flashcard) => {
-    console.log(`\nID: ${flashcard.idFlashcard}`)
-      console.log(`PERGUNTA: ${flashcard.pergunta}`);
-      console.log(`RESPOSTA: ${flashcard.resposta}`);
-    });
-    console.log("\n-------------------------------------------");
+
+    if (!flashcardAtualizado) {
+      return res.status(404).json({ message: "Flashcard não encontrado." });
+    }
+    
+    res.status(200).json(flashcardAtualizado);
+
+  } catch (error) {
+    console.error("Erro ao atualizar flashcard:", error);
+    res.status(500).json({ message: `Ocorreu um erro no servidor: ${error.message}` });
   }
-
-  console.log(`Digite o ID do flashcard que deseja editar: `)
-  const idFlashcardSelecionado = prompt("> ").trim();
-
-  const flashcardEncontrado = flashcardsDoBaralho.find(
-    (flashcard) => flashcard.idFlashcard === parseInt(idFlashcardSelecionado)
-  );
-
-  if (!flashcardEncontrado) {
-    console.clear();
-    console.log("\n====== Flashcard não encontrado! ======");
-    console.log("Aperte ENTER para voltar ao menu...");
-    prompt("");
-    console.clear()
-    exibirMenu();
-    return;
-  }
-
-  console.log(
-    `(Atual: ${flashcardEncontrado.pergunta}) Digite a NOVA pergunta do flashcard (ou deixe em branco): `
-  );
-  let novaPergunta = prompt("> ");
-
-  if (novaPergunta !== "") {
-    flashcardEncontrado.pergunta = novaPergunta;
-  }
-
-  console.log(
-    `(Atual: ${flashcardEncontrado.resposta}) Digite a NOVA resposta do flashcard (ou deixe em branco): `
-  );
-  let novaResposta = prompt("> ");
-
-  if (novaResposta !== "") {
-    flashcardEncontrado.resposta = novaResposta;
-  }    
-
-  console.clear()
-  console.log(`===Flashcard: ${flashcardEncontrado.idFlashcard} editado com sucesso===`)
-  exibirMenu()
 }

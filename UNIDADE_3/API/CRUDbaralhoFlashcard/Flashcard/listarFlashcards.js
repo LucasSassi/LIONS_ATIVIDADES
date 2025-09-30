@@ -1,23 +1,10 @@
-import { flashcards, prompt, exibirMenu } from "../menu.js";
+import MFlashcard from "../Schemas/schemaFlashcards.js"
 
-export function listarFlashcards() {
-  console.clear();
-
-  if (flashcards.length === 0) {
-    console.log("Nenhum flashcard criado ainda. Crie um primeiro.");
-    prompt("Pressione Enter para voltar ao menu...");
-    exibirMenu();
-    return;
+export async function listarFlashcards(req, res) {
+  try {
+    const flashcards = await MFlashcard.find()
+    res.status(200).send(flashcards)
+  } catch (error) {
+    res.status(500).send({ message: "Falha ao buscar os flashcards.", error: error.message })
   }
-
-  console.log("Flashcards existentes:");
-  flashcards.forEach((flashcard) => {
-    console.log(
-      `- ${flashcard.tituloBaralho}\nPERGUNTA: ${flashcard.pergunta}\nRESPOSTA: ${flashcard.resposta}\n\n`
-    );
-  });
-  console.log("Aperte ENTER para voltar ao menu...");
-  prompt("");
-  console.clear();
-  exibirMenu();
 }

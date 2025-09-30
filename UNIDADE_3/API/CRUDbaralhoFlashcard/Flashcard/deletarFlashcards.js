@@ -1,46 +1,14 @@
-import { flashcards, prompt, exibirMenu } from "../menu.js";
+import MFlashcard from "../Schemas/schemaFlashcards.js";
 
-export function deletarFlashcard(){
-    console.clear()
+export async function deletarFlashcard(req, res) {
+  try {
+    const idParaDeletar = req.params.id;
 
-    if (flashcards.length === 0) {
-        console.log("Nenhum flashcard criado ainda. Crie um primeiro.");
-        prompt("Pressione Enter para voltar ao menu...");
-        exibirMenu();
-        return;
-      }
+    const deletarFlashcard = await MFlashcard.findByIdAndDelete(idParaDeletar);
 
-    console.log("Flashcards existentes:");
-    flashcards.forEach((flashcard) => {
-      console.log(`- ${flashcard.idFlashcard}\nPERGUNTA: ${flashcard.pergunta}\nRESPOSTA: ${flashcard.resposta}\n\n`);
-    });
-
-    console.log("Digite o ID do flashcard que deseja deletar.")
-    let idFlashcardSelecionado = prompt("> ").trim()
-
-    const flashcardEncontrado2 = flashcards.find(
-        (flashcard) =>
-            flashcard.idFlashcard=== parseInt(idFlashcardSelecionado)
-      );
-    
-      if (!flashcardEncontrado2) {
-        console.clear();
-        console.log("\n====== Flashcard não encontrado! ======");
-        prompt("Pressione Enter para voltar ao menu...");
-        exibirMenu();
-        return;
-      }
-
-      const indexDoFlashcard = flashcards.findIndex(
-        (f) => f.idFlashcard === flashcardEncontrado2.idFlashcard
-      );
-    
-      if (indexDoFlashcard > -1) {
-        flashcards.splice(indexDoFlashcard, 1);
-      }
-
-      console.clear()
-      console.log("===Flashcard deletado com sucesso===")
-      exibirMenu()
-
+    res.status(200).send("Flashcard deletado com sucesso!", deletarFlashcard);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erro interno no servidor." });
+  }
 }
