@@ -1,3 +1,5 @@
+// TODO: FALTA FAZER
+
 import { baralhos, flashcards, prompt, exibirMenu } from "../menu.js";
 
 export function deletarBaralho() {
