@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const movmentSchema = new mongoose.Schema({
-  idProduct: {
+  productid: {
     type: String,
     required: [true, 'O ID do produto é obrigatório.'],
     trim: true,

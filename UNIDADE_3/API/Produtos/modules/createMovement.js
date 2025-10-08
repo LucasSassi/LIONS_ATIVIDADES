@@ -1,15 +1,12 @@
 import MMovement from "../models/schemaMovement.js";
 
-export async function createMovement(idProduct, type, quantity) {
-  try {
-    const newMovement = new MMovement({
-      idProduct,
-      type,
-      quantity,
-    });
+export async function createMovement(movementData) {
+  const newMovement = new MMovement({
+    productid: movementData.productId,
+    type: movementData.type,
+    quantity: movementData.quantity,
+    name: movementData.name
+  });
 
-    await newMovement.save();
-  } catch (err) {
-    console.error(`O erro é: ${err}`);
-  }
+  await newMovement.save();
 }
