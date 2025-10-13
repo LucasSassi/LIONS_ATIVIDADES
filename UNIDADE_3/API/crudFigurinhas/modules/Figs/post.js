@@ -1,15 +1,16 @@
-import Mfig from "../models/SchemaFigurinha.js";
+import Mfig from "../../models/SchemaFigurinha.js";
 
 export async function createFig(req, res) {
-  const { Numero, Tema } = req.body;
+  const { Numero, Tema, UserId } = req.body;
   try {
-    if (!Numero, !Tema) {
+    if (!Numero, !Tema, !UserId) {
       return res.status(400).json({
         message: "Todos os campos são obrigatórios.",
       });
     }
 
     const newFig = new Mfig({
+      UserId,
       Numero,
       Tema,
     });

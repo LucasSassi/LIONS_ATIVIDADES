@@ -1,4 +1,4 @@
-import Mfig from "../models/SchemaFigurinha.js";
+import Mfig from "../../models/SchemaFigurinha.js";
 
 export async function updateFig(req, res) {
   try {
