@@ -9,6 +9,7 @@ import { deleteFig } from "./modules/Figs/delete.js";
 
 // USERS
 import { createUser } from "./modules/Users/post.js";
+import { listUser } from "./modules/Users/get.js";
 
 export const router = express.Router();
 
@@ -20,4 +21,5 @@ router.delete("/Figurinhas/:id", deleteFig)
 
 // USERS
 router.post("/Users", createUser)
+router.get("/Users", listUser)
 

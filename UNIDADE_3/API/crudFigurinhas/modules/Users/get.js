@@ -1,6 +1,6 @@
 import MUser from "../../models/schemaUsers.js";
 
-export async function listFig(req, res) {
+export async function listUser(req, res) {
   try {
     const filter = {};
 
