@@ -11,7 +11,7 @@ export async function updateFig(req, res) {
     }
 
     res.status(200).json({
-      message: "Figurinha atualizada com sucesso!",
+      message: "Figurinha atualizada/trocada com sucesso!",
       figurinha: updatedFig,
     });
   } catch (error) {
