@@ -9,7 +9,7 @@ export async function deleteUser(req, res) {
 
     const figsParaDeletar = await Mfig.deleteMany({ UserId: idParaDeletar });
 
-    res
+    res 
       .status(200)
       .send(`User deletado com sucesso!`, deletarUser, figsParaDeletar);
   } catch (err) {
