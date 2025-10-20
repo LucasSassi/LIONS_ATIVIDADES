@@ -29,3 +29,10 @@ app.use(router);
 app.listen(port, () => {
   console.log(`Server working: http://localhost:${port}`);
 });
+
+/*
+
+DATABASE_URL="mongodb+srv://lions123:lions123@cluster0.kt8yoxu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+token="36c5e560ecb4d0cac76541eb981301959079c85277db27f5da9e1357102f7468"
+
+*/
