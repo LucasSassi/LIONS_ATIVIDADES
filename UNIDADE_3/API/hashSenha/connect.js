@@ -22,7 +22,6 @@ app.use(express.json())
 
 
 app.use(express.json());
-console.log("cheguei")
 app.use(router);
 
 

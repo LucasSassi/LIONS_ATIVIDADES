@@ -3,17 +3,14 @@ import MUser from "../models/schemaUser.js";
 
 export async function addUser(req, res) {
   try {
-    const { email, password, ...outrosDados } = req.body; // Desestruturando para pegar os campos
+    const { email, password, ...outrosDados } = req.body;
 
-    // --- VALIDAÇÃO ---
-    // Verifica se a senha foi fornecida e não é uma string vazia
     if (!password || typeof password !== "string" || password.trim() === "") {
       return res.status(400).json({
         // 400 = Bad Request
         message: "O campo 'password' é obrigatório e não pode ser vazio.",
       });
     }
-    // Você também deveria validar o email e outros campos aqui
 
     const userExists = await MUser.findOne({ email: email });
     if (userExists) {
@@ -31,7 +28,7 @@ export async function addUser(req, res) {
       password: hashSenha,
     });
 
-    return res.status(201).json(newUser);
+    return res.status(201).json({ User: newUser });
   } catch (err) {
     console.error(`O erro é: ${err}`);
     return res.status(500).json({

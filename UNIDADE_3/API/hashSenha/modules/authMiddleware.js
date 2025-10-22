@@ -6,7 +6,7 @@ export function authMiddleware(req, res, next) {
   if (!token) return res.status(401).json({ error: 'Token não fornecido' });
 
   try {
-    const decoded = jwt.verify(token, process.env.token );
+    const decoded = jwt.verify(token, process.env.JWT_SECRET );
     req.user = decoded;
     next();
   } catch {
