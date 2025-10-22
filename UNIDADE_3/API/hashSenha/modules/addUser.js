@@ -7,7 +7,6 @@ export async function addUser(req, res) {
 
     if (!password || typeof password !== "string" || password.trim() === "") {
       return res.status(400).json({
-        // 400 = Bad Request
         message: "O campo 'password' é obrigatório e não pode ser vazio.",
       });
     }

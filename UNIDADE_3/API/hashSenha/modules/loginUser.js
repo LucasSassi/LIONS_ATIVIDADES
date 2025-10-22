@@ -1,8 +1,6 @@
 import MUser from '../models/schemaUser.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
-dotenv.config();
 
 export async function loginUser(req, res) {
 const authHeader = req.headers['authorization'];
