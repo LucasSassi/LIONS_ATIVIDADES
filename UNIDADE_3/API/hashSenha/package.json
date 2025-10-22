@@ -10,6 +10,7 @@
   "name": "hashsenha",
   "version": "1.0.0",
   "main": "connect.js",
+  "type": "module",
   "devDependencies": {},
   "scripts": {
     "start:dev": "nodemon connect.js"
