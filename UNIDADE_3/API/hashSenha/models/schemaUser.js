@@ -11,6 +11,12 @@ const userSchema = new mongoose.Schema({
     required: [true, "A senha do usuario é obrigatório."],
     trim: true,
   },
+  Role: {
+    type: [String],
+    enum: ["ADMIN", "USER"],
+    default: "USER",
+    require: true
+  },
 });
 
 const MUser = mongoose.model("UserSenha", userSchema);

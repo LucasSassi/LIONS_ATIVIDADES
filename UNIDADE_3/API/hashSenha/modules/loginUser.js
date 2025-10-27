@@ -20,7 +20,7 @@ export async function loginUser(req, res) {
       return res.status(401).json({ error: "Email ou senha inválidos." });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id, role: user.Role }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
