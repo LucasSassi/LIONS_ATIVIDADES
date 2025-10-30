@@ -1,22 +1,22 @@
-import User from '../models/user.model.js';
+import MUser from '../models/user.model.js';
 
 export default {
   create(data) {
-    return User.create(data);
+    return MUser.create(data);
   },
   findAll() {
-    return User.find();
+    return MUser.find();
   },
   findById(id) {
-    return User.findById(id);
+    return MUser.findById(id);
   },
   updateById(id, data) {
-    return User.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+    return MUser.findByIdAndUpdate(id, data, { new: true, runValidators: true });
   },
   deleteById(id) {
-    return User.findByIdAndDelete(id);
+    return MUser.findByIdAndDelete(id);
   },
   findByEmail(email) {
-    return User.findOne({ email });
+    return MUser.findOne({ email });
   },
 };
