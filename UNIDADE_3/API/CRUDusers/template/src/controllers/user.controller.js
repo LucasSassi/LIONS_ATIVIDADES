@@ -48,7 +48,7 @@ export default {
 
   async login (req, res, next){
     try{
-      await userService.loginUsers(req.body)
+      await userService.loginUsers(data)
       res.status(204).end()
     }catch (error) {
       next(error)

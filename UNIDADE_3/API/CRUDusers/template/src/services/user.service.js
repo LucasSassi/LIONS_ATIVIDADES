@@ -74,7 +74,6 @@ export default {
 
   async loginUsers(data) {
     try {
-
       if (!data.email || !data.password) {
         throw createError;
       }
@@ -95,11 +94,10 @@ export default {
         }
       );
 
-      return (MUser, token)
-
+      return MUser, token;
     } catch (error) {
       console.error(error);
-      throw createError("Erro na criação do usuario e ao gerar token")
+      throw createError("Erro na criação do usuario e ao gerar token");
     }
   },
 };
