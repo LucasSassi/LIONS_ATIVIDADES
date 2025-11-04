@@ -2,6 +2,7 @@ import MUser from "../models/user.model.js";
 import repo from "../repositories/user.repository.js";
 import createError from "../utils/app-error.js";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 
 export function ensureValidPayload({ name, email, password }) {
   if (!name?.trim()) throw createError("Nome é obrigatório.", 400);
@@ -73,31 +74,28 @@ export default {
   },
 
   async loginUsers(data) {
-    try {
-      if (!data.email || !data.password) {
-        throw createError;
-      }
-
-      const validPassword = MUser.password
-        ? await bcrypt.compare(data.password, MUser.password)
-        : false;
-
-      if (!MUser || !validPassword) {
-        return createError("Todos os campos sao obrogatorios");
-      }
-
-      const token = jwt.sign(
-        { userId: MUser._id, role: MUser.Role },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "1h",
-        }
-      );
-
-      return MUser, token;
-    } catch (error) {
-      console.error(error);
-      throw createError("Erro na criação do usuario e ao gerar token");
+    if (!data || !data.email || !data.password) {
+      throw createError('E-mail e senha são obrigatórios.', 400);
     }
+
+    const user = await repo.findByEmail(data.email.trim().toLowerCase());
+    if (!user) {
+      throw createError('E-mail ou senha inválidos.', 401);
+    }
+
+    const validPassword = await bcrypt.compare(data.password, user.password);
+    if (!validPassword) {
+      throw createError('E-mail ou senha inválidos.', 401);
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, roles: user.roles || [] },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '1h',
+      }
+    );
+
+    return { token, user: { id: user._id, name: user.name, email: user.email, roles: user.roles } };
   },
 };

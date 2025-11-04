@@ -1,17 +1,22 @@
-import dotenv from 'dotenv';
-import app from './app.js';
-import connect from './config/db.js';
+import dotenv from "dotenv";
+import path from "path";
+import app from "./app.js";
+import connect from "./config/db.js";
 
-dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 const PORT = 2323;
 
 (async () => {
   try {
-    await connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mvc_api');
-    app.listen(PORT, () => console.log(`API ouvindo em http://localhost:${PORT}`));
+    await connect(
+      process.env.MONGODB_URI || "mongodb://localhost:27017/mvc_api"
+    );
+    app.listen(PORT, () =>
+      console.log(`API ouvindo em http://localhost:${PORT}`)
+    );
   } catch (error) {
-    console.error('Erro ao conectar no banco ou iniciar o servidor', error);
+    console.error("Erro ao conectar no banco ou iniciar o servidor", error);
     process.exit(1);
   }
 })();
