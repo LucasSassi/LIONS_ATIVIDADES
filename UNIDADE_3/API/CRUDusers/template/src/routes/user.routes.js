@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import userController from '../controllers/user.controller.js';
 import { ensureValidId } from '../middlewares/validate.middleware.js';
+import { authMiddleware } from '../middlewares/auth-middleware.js';
+import { loginUser } from '../../../../hashSenha/modules/loginUser.js';
 
 const router = Router();
 
@@ -9,5 +11,6 @@ router.get('/users', userController.list);
 router.get('/users/:id', ensureValidId, userController.get);
 router.put('/users/:id', ensureValidId, userController.update);
 router.delete('/users/:id', ensureValidId, userController.remove);
+router.post('/users/login', ensureValidId, userController.login )
 
 export default router;

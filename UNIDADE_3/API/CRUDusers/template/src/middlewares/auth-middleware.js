@@ -1,6 +1,11 @@
 import jwt from 'jsonwebtoken';
 import createError from '../utils/app-error.js';
 
+export const Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+};
+
 export function authMiddleware() {
   return (req, _res, next) => {
     const authHeader = req.headers.authorization;

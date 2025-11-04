@@ -45,4 +45,13 @@ export default {
       next(error);
     }
   },
+
+  async login (req, res, next){
+    try{
+      await userService.loginUsers(req.body)
+      res.status(204).end()
+    }catch (error) {
+      next(error)
+    }
+  }
 };

@@ -1,6 +1,7 @@
+import MUser from "../models/user.model.js";
 import repo from "../repositories/user.repository.js";
 import createError from "../utils/app-error.js";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcrypt";
 
 export function ensureValidPayload({ name, email, password }) {
   if (!name?.trim()) throw createError("Nome é obrigatório.", 400);
@@ -16,16 +17,14 @@ export default {
     const existing = await repo.findByEmail(data.email);
     if (existing) throw createError("E-mail já cadastrado.", 409);
 
-    // const senhaHash = await bcrypt.hash(password, 12);
+    const senhaHash = await bcrypt.hash(data.password, 12);
 
     return repo.create({
       name: data.name.trim(),
       email: data.email.trim().toLowerCase(),
-      password: data.password,
+      password: senhaHash,
     });
   },
-
-
 
   async listUsers() {
     return repo.findAll();
@@ -71,5 +70,36 @@ export default {
   async removeUser(id) {
     const deleted = await repo.deleteById(id);
     if (!deleted) throw createError("Usuário não encontrado.", 404);
+  },
+
+  async loginUsers(data) {
+    try {
+
+      if (!data.email || !data.password) {
+        throw createError;
+      }
+
+      const validPassword = MUser.password
+        ? await bcrypt.compare(data.password, MUser.password)
+        : false;
+
+      if (!MUser || !validPassword) {
+        return createError("Todos os campos sao obrogatorios");
+      }
+
+      const token = jwt.sign(
+        { userId: MUser._id, role: MUser.Role },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+
+      return (MUser, token)
+
+    } catch (error) {
+      console.error(error);
+      throw createError("Erro na criação do usuario e ao gerar token")
+    }
   },
 };
