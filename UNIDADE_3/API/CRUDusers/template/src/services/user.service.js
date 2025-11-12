@@ -4,7 +4,7 @@ import createError from "../utils/app-error.js";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 
-export function ensureValidPayload({ name, email, password }) {
+export function ensureValidPayload({ name, email, password, roles }) {
   if (!name?.trim()) throw createError("Nome é obrigatório.", 400);
   if (!email?.trim()) throw createError("E-mail é obrigatório.", 400);
   if (!email.includes("@")) throw createError("E-mail inválido.", 400);
@@ -24,6 +24,7 @@ export default {
       name: data.name.trim(),
       email: data.email.trim().toLowerCase(),
       password: senhaHash,
+      roles: data.roles.trim()
     });
   },
 
