@@ -13,7 +13,7 @@ describe("when we try to find a user by a valid id", () => {
 
     const foundUser = await userRepository.findById(createdUser._id);
 
-    expect(foundUser).toBeDefined();
+    expect(foundUser).toBeDefined(); 
 
     expect(foundUser._id.toString()).toBe(createdUser._id.toString());
     expect(foundUser.email).toBe(userData.email.toLowerCase());

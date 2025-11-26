@@ -10,7 +10,7 @@ describe ('when we try to create a user with an email that already exists', () =
     };
 
     await userRepository.create(userData);
-
+ 
     await expect(userRepository.create(userData)).rejects.toThrow();
   });
 })

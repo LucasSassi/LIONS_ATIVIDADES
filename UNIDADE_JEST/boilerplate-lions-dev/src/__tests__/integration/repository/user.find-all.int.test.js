@@ -11,7 +11,7 @@ describe("when we try to find all users in the database", () => {
     const user2Data = {
       name: "User Two",
       email: `user2-${Date.now() + 1}@example.com`,
-      password: "strongpassword2",
+      password: "strongpassword2", 
     };
 
     const createdUser1 = await userRepository.create(user1Data);
