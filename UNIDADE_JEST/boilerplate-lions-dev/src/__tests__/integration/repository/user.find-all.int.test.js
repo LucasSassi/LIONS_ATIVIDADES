@@ -1,3 +1,4 @@
+import userModel from "../../../models/user.model.js";
 import userRepository from "../../../repositories/user.repository.js";
 
 describe("when we try to find all users in the database", () => {
@@ -14,8 +15,8 @@ describe("when we try to find all users in the database", () => {
       password: "strongpassword2", 
     };
 
-    const createdUser1 = await userRepository.create(user1Data);
-    const createdUser2 = await userRepository.create(user2Data);
+    const createdUser1 = await userModel.create(user1Data);
+    const createdUser2 = await userModel.create(user2Data);
 
     const foundUsers = await userRepository.findAll();
 
