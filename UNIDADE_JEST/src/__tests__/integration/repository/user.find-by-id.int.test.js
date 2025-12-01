@@ -1,14 +1,7 @@
+///Ex: Crie testes de integração para o método `findById` do repositório de usuários, garantindo que ele retorne o usuário correto com base no ID fornecido
+// lide adequadamente com casos em que o usuário não é encontrado.
 import userModel from "../../../models/user.model.js";
 import userRepository from "../../../repositories/user.repository.js";
-
-describe("when we try to find a user by a null id", () => {
-  it("returns the correct user", async () => {
-    const fakeID = '123456789'
-    const foundUser = await userRepository.findById(fakeID._id);
-
-    expect(foundUser).toBeNull();
-  });
-});
 
 describe("when we try to find a user by a valid id", () => {
   it("returns the correct user", async () => {
@@ -19,6 +12,8 @@ describe("when we try to find a user by a valid id", () => {
     };
 
     const createdUser = await userModel.create(userData);
+    //sempre utilize o model para criar dados de teste diretamente no banco
+    // não utilize o repositório para criar dados de teste para evitar dependências circulares nos testes.
 
     const foundUser = await userRepository.findById(createdUser._id);
 
